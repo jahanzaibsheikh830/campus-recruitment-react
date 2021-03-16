@@ -5,7 +5,8 @@ import url from '../../baseurl/BaseUrl'
 import {Link} from 'react-router-dom'
 const Signup = () => {
 
-  function signup() {
+  function signup(e) {
+    e.preventDefault()
     axios({
       method: 'post',
       url: url + "/signup",

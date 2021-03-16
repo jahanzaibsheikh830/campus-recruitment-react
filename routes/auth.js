@@ -108,7 +108,8 @@ router.post("/login", (req, res, next) => {
                                 email: user.email,
                                 phone: user.phone,
                                 gender: user.gender,
-                                role: user.role
+                                role: user.role,
+                                profilePic: user.profilePic
                             }
                         });
 

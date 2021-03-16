@@ -1,41 +1,32 @@
 import React from "react";
 import { Link } from 'react-router-dom'
 import { useGlobalState } from './../context/globalState'
+import ProfilePic from '../assets/download.png'
 function Navbar() {
     const state = useGlobalState()
     return (
         <div className='sticky-top bg-dark'>
-            <nav className="navbar  navbar-expand-lg navbar-light">
-                <a className="navbar-brand text-white" href="#">Welcome {state.userData.name.charAt(0).toUpperCase() + state.userData.name.slice(1)}</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon" />
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="#">
+                    <ul className="navbar-nav">
+                        <li className="nav-item active">
+                            <Link className="nav-link text-white" to="/">Profile<span className="sr-only">(current)</span></Link>
+                        </li>
+                        <li className="nav-item active">
+                            <Link className="nav-link text-white" to="/jobs">Jobs<span className="sr-only">(current)</span></Link>
+                        </li>
+                    </ul>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
                 </button>
-                <div className="collapse navbar-collapse" id="navbarSupportedContent" >
-                    {state.role === 'student' ?
-                        <>
-                            <span className="navbar-text">
-                            <ul className="navbar-nav mr-auto f">
-                                <li className="nav-item active ">
-                                    <Link className="nav-link text-white" to="/">Profile</Link>
-                                </li>
-                                <li className="nav-item active">
-                                    <Link className="nav-link text-white" to="/jobs">Jobs</Link>
-                                </li>
-                            </ul>
-                            </span>
-                        </> :
-                        <>
-                            <ul className="navbar-nav mr-auto">
-                                <li className="nav-item active">
-                                    <Link className="nav-link" to="/">Admin Dashboard <span className="sr-only">(current)</span></Link>
-                                </li>
-                                <li className="nav-item active">
-                                    <Link className="nav-link" to="/addproducts">Add Products <span className="sr-only">(current)</span></Link>
-                                </li>
-                            </ul>
-                            <h3 className="mr-3">Welcome {state.userData.name.charAt(0).toUpperCase() + state.userData.name.slice(1)}</h3>
-                        </>
-                    }
+                <div class="collapse navbar-collapse" id="navbarText">
+                <ul className="navbar-nav mr-auto "></ul>
+                    <span class="navbar-text text-white">
+                        <img src={state.userData.profilePic ? state.userData.profilePic : ProfilePic } alt=""
+                            style={{width: "40px", height: "40px", borderRadius: "50%" }}
+                        />
+                    </span>
                 </div>
             </nav>
         </div>

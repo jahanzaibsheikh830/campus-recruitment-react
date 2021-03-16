@@ -6,7 +6,8 @@ import {Link} from 'react-router-dom'
 import { useGlobalStateUpdate } from '../../context/globalState'
 const Login = () => {
     const dispatch = useGlobalStateUpdate()
-    function login() {
+    function login(e) {
+        e.preventDefault()
         axios({
             method: 'post',
             url: url + "/login",
