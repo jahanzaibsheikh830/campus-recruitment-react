@@ -19,9 +19,12 @@ const Login = () => {
         }).then((res) => {
             console.log("data===", res.data.user)
             if (res.data.status === 200) {
-                dispatch({ type: "USERDATA", item: res.data.user })
-                dispatch({ type: "ROLE", item: res.data.user.role })
-                dispatch({ type: "LOGINSTATUS", item: true })
+                dispatch(prev =>({
+                    ...prev,
+                    loginStatus: true,
+                    userData: res.data.user,
+                    role: res.data.user.role
+                }))
             }
             else {
                 alert(res.data.message)
