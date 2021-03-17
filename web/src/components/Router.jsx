@@ -17,7 +17,7 @@ function RoutesConfig() {
                         <Switch>
                             <Route exact path="/" component={Signup} />
                             <Route path="/login" component={Login} />
-                            <Route path="*" component={Signup}/> 
+                            <Route path="*" component={Signup} />
                         </Switch>
                     </div> : null}
 
@@ -25,9 +25,9 @@ function RoutesConfig() {
                     <>
                         <Navbar />
                         <Switch>
-                        <Route exact path="/" component={StudentDashboard} />
-                        <Route path="/jobs" component={Jobs}/>
-                        <Route path="*" component={StudentDashboard}/>
+                            <Route exact path="/" component={StudentDashboard} />
+                            <Route path="/jobs" component={Jobs} />
+                            <Route path="*" component={StudentDashboard} />
                         </Switch>
                     </> : null
                 }
@@ -35,8 +35,8 @@ function RoutesConfig() {
                     <>
                         <Navbar />
                         <Switch>
-                        <Route exact path="/" component={CompanyDashboard} />
-                        <Route path="*" component={CompanyDashboard} />
+                            <Route exact path="/" component={CompanyDashboard} />
+                            <Route path="*" component={CompanyDashboard} />
                         </Switch>
                     </> : null
                 }

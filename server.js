@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var cors = require("cors");
 var morgan = require("morgan");
-var { UserModel } = require('./dbconn/module')
+var { UserModel,userDetailsModel } = require('./dbconn/module')
 var path = require("path")
 var SERVER_SECRET = process.env.SECRET || "1234";
 var jwt = require('jsonwebtoken')
@@ -158,7 +158,52 @@ app.post("/upload", upload.any(), (req, res, next) => {
             }
         });
 })
+app.post('/addDetails', (req, res, next) => {
+    if (!req.body.fullName || !req.body.cgpa || !req.body.experience ||
+        !req.body.education || !req.body.skills) {
+        res.status(403).send(`
+            please send name, email, passwod, phone and gender in json body.
+            e.g:
+            {
+                "name": "jahanzaib",
+                "email": "jahanzaib@gmail.com",
+                "password": "123",
+                "phone": "034320492",
+                "gender": "Male"
+            }`)
+        return;
+    }
 
+    UserModel.findOne({ email: req.body.jToken.email }, (err, user) => {
+        if (user) {
+            var userDetails = new userDetailsModel({
+                "fullName": req.body.fullName,
+                "eduvcation": req.body.education,
+                "cgpa": req.body.cgpa,
+                "skills": req.body.skills,
+                "experience": req.body.experience,
+            })
+            userDetails.save((err, data) => {
+                if (!err) {
+                    res.send({
+                        status: 200,
+                        message: "Data Successfully Added"
+                    })
+                } else {
+                    console.log(err);
+                    res.status(500).send({
+                        message: "user create error, " + err
+                    })
+                }
+            });
+        }
+        else {
+            res.status(500).send({
+                message: "user create error, " + err
+            })
+        }
+    })
+})
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log("server is running on: ", PORT);

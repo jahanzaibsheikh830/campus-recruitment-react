@@ -21,11 +21,12 @@ function Navbar() {
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarText">
-                <ul className="navbar-nav mr-auto "></ul>
+                    <ul className="navbar-nav mr-auto "></ul>
                     <span class="navbar-text text-white">
-                        <img src={state.userData.profilePic ? state.userData.profilePic : ProfilePic } alt=""
-                            style={{width: "40px", height: "40px", borderRadius: "50%" }}
+                        <img src={state.userData.profilePic ? state.userData.profilePic : ProfilePic} alt=""
+                            style={{ width: "35px", height: "35px", borderRadius: "50%" }}
                         />
+                        <span className='ml-2'>{state.userData.name.charAt(0).toUpperCase() + state.userData.name.slice(1)}</span>
                     </span>
                 </div>
             </nav>

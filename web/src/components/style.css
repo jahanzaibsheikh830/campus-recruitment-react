@@ -35,3 +35,12 @@ form input[type="file"] {
     display: none;
     cursor: pointer;
 }
+.editForm{
+    box-shadow: 0 0 10px grey;
+    padding: 20px;
+}
+.profile{
+    box-shadow: 0 0 10px grey;
+    padding: 20px;
+    text-align: center;
+}   
