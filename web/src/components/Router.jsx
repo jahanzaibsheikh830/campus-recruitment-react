@@ -5,6 +5,7 @@ import Signup from './login-signup/Signup'
 import StudentDashboard from './stdashboard/StudentDashboard'
 import CompanyDashboard from './codashboard/CompanyDashboard'
 import Jobs from './stdashboard/Jobs'
+import Students from './codashboard/Students'
 import Navbar from './Navbar'
 import { useGlobalState } from '../context/globalState'
 function RoutesConfig() {
@@ -36,6 +37,7 @@ function RoutesConfig() {
                         <Navbar />
                         <Switch>
                             <Route exact path="/" component={CompanyDashboard} />
+                            <Route exact path="/students" component={Students} />
                             <Route path="*" component={CompanyDashboard} />
                         </Switch>
                     </> : null

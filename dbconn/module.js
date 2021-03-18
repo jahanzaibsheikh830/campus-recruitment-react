@@ -42,6 +42,7 @@ var userDetails = new mongoose.Schema({
     "education": String,
     "cgpa": String,
     "skills": String,
+    "email": String,
     "experience": String,
     "createdOn": { "type": Date, "default": Date.now },
     "activeSince": Date
@@ -49,7 +50,20 @@ var userDetails = new mongoose.Schema({
 
 var userDetailsModel = mongoose.model("userdetails", userDetails);
 
+var jobDetails = new mongoose.Schema({
+    "jobTitle": String,
+    "salary": String,
+    "jobDes": String,
+    "compName": String,
+    "email": String,
+    "createdOn": { "type": Date, "default": Date.now },
+    "activeSince": Date
+});
+
+var jobDetailsModel = mongoose.model("jobdetails", jobDetails);
+
 module.exports = {
     UserModel: UserModel,
-    userDetailsModel:userDetailsModel
+    userDetailsModel:userDetailsModel,
+    jobDetailsModel: jobDetailsModel
 }

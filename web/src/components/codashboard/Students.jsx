@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import url from '../../baseurl/BaseUrl'
-function Jobs() {
+function Students() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
         axios({
             method: 'get',
-            url: url + "/getJobDetails",
+            url: url + "/getStudentsDetails",
             withCredentials: true
         }).then((response) => {
             setData(response.data.data)
@@ -22,13 +22,14 @@ function Jobs() {
                 <div className='row'>
                     <div className='col-md-12 mt-5'>
                         <table className="table table-striped table-dark">
-                            <thead>
+                            <thead className="">
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Company</th>
-                                    <th scope="col">Job Title</th>
-                                    <th scope="col">Salary</th>
-                                    <th scope="col">Description</th>
+                                    <th scope="col">Full Name</th>
+                                    <th scope="col">Education</th>
+                                    <th scope="col">CGPA</th>
+                                    <th scope="col">Skills</th>
+                                    <th scope="col">Experience</th>
                                 </tr>
                             </thead>
                             {data.map((value, index) => {
@@ -36,10 +37,11 @@ function Jobs() {
                                     <tbody>
                                         <tr>
                                             <th scope="row">{index + 1}</th>
-                                            <td>{value.compName}</td>
-                                            <td>{value.jobTitle}</td>
-                                            <td>{value.salary}</td>
-                                            <td>{value.jobDes}</td>
+                                            <td>{value.fullName}</td>
+                                            <td>{value.education}</td>
+                                            <td>{value.cgpa}</td>
+                                            <td>{value.skills}</td>
+                                            <td>{value.experience}</td>
                                         </tr>
                                     </tbody>
                                 )
@@ -52,4 +54,4 @@ function Jobs() {
     )
 }
 
-export default Jobs
+export default Students

@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var cors = require("cors");
 var morgan = require("morgan");
-var { UserModel,userDetailsModel } = require('./dbconn/module')
+var { UserModel, userDetailsModel,jobDetailsModel } = require('./dbconn/module')
 var path = require("path")
 var SERVER_SECRET = process.env.SECRET || "1234";
 var jwt = require('jsonwebtoken')
@@ -176,14 +176,69 @@ app.post('/addDetails', (req, res, next) => {
 
     UserModel.findOne({ email: req.body.jToken.email }, (err, user) => {
         if (user) {
-            var userDetails = new userDetailsModel({
-                "fullName": req.body.fullName,
-                "eduvcation": req.body.education,
-                "cgpa": req.body.cgpa,
-                "skills": req.body.skills,
-                "experience": req.body.experience,
+            userDetailsModel.findOne({ email: req.body.jToken.email }, (err, email) => {
+                if (email) {
+                    res.send({
+                        message: "You have already added your details"
+                    })
+                }
+                else {
+                    var userDetails = new userDetailsModel({
+                        "fullName": req.body.fullName,
+                        "education": req.body.education,
+                        "email": user.email,
+                        "cgpa": req.body.cgpa,
+                        "skills": req.body.skills,
+                        "experience": req.body.experience,
+                    })
+                    userDetails.save((err, data) => {
+                        if (!err) {
+                            res.send({
+                                status: 200,
+                                message: "Data Successfully Added"
+                            })
+                        } else {
+                            console.log(err);
+                            res.status(500).send({
+                                message: "user create error, " + err
+                            })
+                        }
+                    });
+                }
             })
-            userDetails.save((err, data) => {
+        }
+        else {
+            res.status(500).send({
+                message: "user create error, " + err
+            })
+        }
+    })
+})
+app.post('/addJobs', (req, res, next) => {
+    if (!req.body.jobTitle || !req.body.salary || !req.body.jobDes) {
+        res.status(403).send(`
+            please send name, email, passwod, phone and gender in json body.
+            e.g:
+            {
+                "name": "jahanzaib",
+                "email": "jahanzaib@gmail.com",
+                "password": "123",
+                "phone": "034320492",
+                "gender": "Male"
+            }`)
+        return;
+    }
+
+    UserModel.findOne({ email: req.body.jToken.email }, (err, user) => {
+        if (user) {
+            var jobDetails = new jobDetailsModel({
+                "jobTitle": req.body.jobTitle,
+                "salary": req.body.salary,
+                "email": user.email,
+                "compName": user.name,
+                "jobDes": req.body.jobDes,
+            })
+            jobDetails.save((err, data) => {
                 if (!err) {
                     res.send({
                         status: 200,
@@ -201,6 +256,33 @@ app.post('/addDetails', (req, res, next) => {
             res.status(500).send({
                 message: "user create error, " + err
             })
+        }
+    })
+})
+
+app.get('/getStudentsDetails',(req,res,next)=>{
+    userDetailsModel.find({},(err,data)=>{
+        if (data) {
+            res.send({
+                status: 200,
+                data:data
+            })
+        }
+        else{
+            res.send('something went wrong')
+        }
+    })
+})
+app.get('/getJobDetails',(req,res,next)=>{
+    jobDetailsModel.find({},(err,data)=>{
+        if (data) {
+            res.send({
+                status: 200,
+                data:data
+            })
+        }
+        else{
+            res.send('something went wrong')
         }
     })
 })

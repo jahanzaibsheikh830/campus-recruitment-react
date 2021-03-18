@@ -7,7 +7,8 @@ import { useGlobalState, useGlobalStateUpdate } from '../../context/globalState'
 function StDashboard() {
     const state = useGlobalState()
     const dispatch = useGlobalStateUpdate()
-    console.log(state.userData.profilePic)
+    const [resMsg,setResMsg] = useState('')
+    const [resErrMsg,setResErrMsg] = useState('')
     function uploadImg(e) {
         e.preventDefault()
         var fileInput = document.getElementById("fileToUpload");
@@ -27,6 +28,7 @@ function StDashboard() {
                 dispatch(prev => ({
                     ...prev,
                     userData: {
+                        ...prev,
                         profilePic: res.data.url
                     }
                 }))
@@ -35,12 +37,12 @@ function StDashboard() {
                 console.log(err);
             })
     }
-    function addDetails(e){
+    function addDetails(e) {
         e.preventDefault();
         axios({
             method: 'post',
-            url: url + "/addDetails", 
-            data:{
+            url: url + "/addDetails",
+            data: {
                 fullName: document.getElementById('fullName').value,
                 education: document.getElementById('education').value,
                 cgpa: document.getElementById('cgpa').value,
@@ -48,9 +50,15 @@ function StDashboard() {
                 experience: document.getElementById('experirence').value,
             },
             withCredentials: true
-        }).then((response)=>{
+        }).then((response) => {
             console.log(response)
-        }).catch((err)=>{
+            if (response.data.status) {
+                setResMsg(response.data.message)
+            }
+            else{
+                setResErrMsg(response.data.message)
+            }
+        }).catch((err) => {
             console.log(err)
         })
     }
@@ -58,7 +66,7 @@ function StDashboard() {
         <div>
             <div className="container">
                 <div className="row justify-content-center">
-                    <div className='col-md-3 profile mr-3 mt-5'>
+                    <div className='col-md-3 profile mr-3 mt-5 '>
                         <form>
                             <label for="fileToUpload">
                                 <div class="profile-pic" id="profilePic" style={{ backgroundImage: `url( ${ProfilePic === "" ? ProfilePic : state.userData.profilePic} )` }}>
@@ -87,12 +95,12 @@ function StDashboard() {
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
-                                <label htmlFor="inputEmail4">CGPA</label>
+                                    <label htmlFor="inputEmail4">CGPA</label>
                                     <input type="text" className="form-control" required id="cgpa"
                                         placeholder="CGPA" />
                                 </div>
                                 <div className="form-group col-md-6">
-                                <label htmlFor="inputEmail4">Skills</label>
+                                    <label htmlFor="inputEmail4">Skills</label>
                                     <input type="text" className="form-control" required id="skills"
                                         placeholder="Skills" />
                                 </div>
@@ -101,11 +109,17 @@ function StDashboard() {
                                 <div className="form-group col-md-12">
                                     <label htmlFor="inputEmail4">Experience</label>
                                     <input type="text" className="form-control" required id="experirence"
-                                     placeholder="Experience" />
+                                        placeholder="Experience" />
                                 </div>
                             </div>
                             <button type="submit" className="btn btn-primary">Submit</button>
-                        </form>
+                        </form><br/>
+                        {resMsg?<div class="alert alert-success" role="alert">
+                            {resMsg}
+                        </div>: null}
+                        {resErrMsg?<div class="alert alert-danger" role="alert">
+                            {resErrMsg}
+                        </div>: null}
                     </div>
                 </div>
             </div>
