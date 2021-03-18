@@ -269,6 +269,28 @@ app.get('/getJobDetails',(req,res,next)=>{
         }
     })
 })
+app.post('/delStudentDetails',(req,res,next)=>{
+    console.log("ffs=====",req.body.id)
+    userDetailsModel.findOne({_id: req.body.id},(err,data)=>{
+        if (data) {
+            data.deleteOne({},(err,success)=>{
+                if (success) {
+                    res.send({
+                        status: 200,
+                        message: "Deleted"
+                    })
+                }else{
+                    res.send({
+                        message: "something went wrong"
+                    })
+                }
+            })
+        }
+        else{
+            res.send('something went wrong')
+        }
+    })
+})
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log("server is running on: ", PORT);

@@ -53,7 +53,7 @@ const Login = () => {
                         <div className="form-group">
                             <p>Create an account <Link to="/signup">Signup</Link></p>
                         </div>
-                        <button type="submit" className="btn btn-dark">Submit</button>
+                        <button type="submit" className="btn btn-dark">Login</button>
                     </form>
                 </div>
             </div>

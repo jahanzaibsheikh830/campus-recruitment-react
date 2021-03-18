@@ -51,7 +51,7 @@ const Signup = () => {
             <div className="form-group">
                 <p>Already have an account? <Link to="/login">Login</Link></p>
             </div>
-            <button type="submit" className="btn btn-dark">Submit</button>
+            <button type="submit" className="btn btn-dark">Signup</button>
           </form>
         </div>
         <div className="col-md-7 my-auto">

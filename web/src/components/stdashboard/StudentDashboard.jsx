@@ -69,7 +69,7 @@ function StDashboard() {
                     <div className='col-md-3 profile mr-3 mt-5 '>
                         <form>
                             <label for="fileToUpload">
-                                <div class="profile-pic" id="profilePic" style={{ backgroundImage: `url( ${ProfilePic === "" ? ProfilePic : state.userData.profilePic} )` }}>
+                                <div class="profile-pic" id="profilePic" style={{ backgroundImage: `url( ${state.userData.profilePic  ? state.userData.profilePic :ProfilePic } )` }}>
                                     <span class="glyphicon glyphicon-camera"></span>
                                     <span>Change Image</span>
                                 </div>

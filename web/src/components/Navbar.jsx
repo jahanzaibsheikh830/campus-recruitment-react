@@ -58,6 +58,31 @@ function Navbar() {
                                 </span>
                             </div>
                         </>
+                        : state.role === "admin" ?
+                        <>
+                            <a class="navbar-brand" href="#">
+                                <ul className="navbar-nav">
+                                    <li className="nav-item active">
+                                        <Link className="nav-link text-white" to="/">Students<span className="sr-only">(current)</span></Link>
+                                    </li>
+                                    <li className="nav-item active">
+                                        <Link className="nav-link text-white" to="/company">Company<span className="sr-only">(current)</span></Link>
+                                    </li>
+                                </ul>
+                            </a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarText">
+                                <ul className="navbar-nav mr-auto "></ul>
+                                <span class="navbar-text text-white">
+                                    <img src={state.userData.profilePic ? state.userData.profilePic : ProfilePic} alt=""
+                                        style={{ width: "35px", height: "35px", borderRadius: "50%" }}
+                                    />
+                                    <Logout />
+                                </span>
+                            </div>
+                        </>
                         : null}
             </nav>
         </div>

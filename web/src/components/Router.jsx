@@ -6,6 +6,8 @@ import StudentDashboard from './stdashboard/StudentDashboard'
 import CompanyDashboard from './codashboard/CompanyDashboard'
 import Jobs from './stdashboard/Jobs'
 import Students from './codashboard/Students'
+import StInfo from './admin/StInfo'
+import CoInfo from './admin/CoInfo'
 import Navbar from './Navbar'
 import { useGlobalState } from '../context/globalState'
 function RoutesConfig() {
@@ -32,13 +34,24 @@ function RoutesConfig() {
                         </Switch>
                     </> : null
                 }
+
                 {state.role === "company" ?
                     <>
                         <Navbar />
                         <Switch>
                             <Route exact path="/" component={CompanyDashboard} />
-                            <Route exact path="/students" component={Students} />
+                            <Route path="/students" component={Students} />
                             <Route path="*" component={CompanyDashboard} />
+                        </Switch>
+                    </> : null
+                }
+                {state.role === "admin" ?
+                    <>
+                        <Navbar />
+                        <Switch>
+                            <Route exact path="/" component={StInfo} />
+                            <Route path="/company" component={CoInfo} />
+                            <Route path="*" component={StInfo} />
                         </Switch>
                     </> : null
                 }
